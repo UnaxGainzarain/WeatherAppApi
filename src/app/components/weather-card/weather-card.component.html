@@ -1,3 +1,23 @@
-<p>
-  weather-card works!
-</p>
+<ion-card class="glass-card">
+  <ion-card-content>
+    <ion-grid>
+      <ion-row class="ion-justify-content-center ion-text-center">
+        <ion-col size="12">
+          <ion-text color="light">
+            <h2 class="city-name">{{ city }}</h2>
+          </ion-text>
+        </ion-col>
+        <ion-col size="12">
+          <ion-text color="light">
+            <h1 class="temperature">{{ temperature }}º</h1>
+          </ion-text>
+        </ion-col>
+        <ion-col size="12">
+          <ion-text color="light">
+            <p class="description">{{ description }} {{ minMax }}</p>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>
