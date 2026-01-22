@@ -6,20 +6,53 @@
 
 <ion-content [fullscreen]="true" class="background-weather">
     <ion-list lines="none" class="glass-list">
-        <ion-item *ngFor="let item of hourlyList" class="glass-item">
-            <ion-label>
-                <h2>{{ item.dt_txt | date:'HH:mm' }}</h2>
-                <p>{{ item.dt_txt | date:'EEE, MMM d' }}</p>
-            </ion-label>
 
-            <div class="weather-info" slot="end">
-                <ion-icon [name]="getWeatherIcon(item.weather[0].icon)"
-                    style="font-size: 1.5rem; margin-right: 10px;"></ion-icon>
-                <div class="temp">
-                    <h2>{{ item.main.temp | number:'1.0-0' }}º</h2>
-                    <p class="feels-like">ST {{ item.main.feels_like | number:'1.0-0' }}º</p>
-                </div>
-            </div>
-        </ion-item>
+        <ng-container *ngFor="let group of forecastGroups; let i = index">
+            <!-- Date Header -->
+            <ion-list-header class="glass-header">
+                <ion-label>
+                    {{ i === 0 ? 'Hoy' : (group.date | date:'EEEE, d MMMM') }}
+                </ion-label>
+            </ion-list-header>
+
+            <!-- Forecast Items for that Day -->
+            <ion-item *ngFor="let item of group.items" class="glass-item">
+                <ion-grid>
+                    <ion-row class="ion-align-items-center">
+                        <!-- Time -->
+                        <ion-col size="3" class="time-col">
+                            <h2>{{ item.dt_txt | date:'HH:mm' }}</h2>
+                        </ion-col>
+
+                        <!-- Icon -->
+                        <ion-col size="3" class="icon-col">
+                            <ion-icon [name]="getWeatherIcon(item.weather[0].icon)" class="weather-icon"></ion-icon>
+                            <div *ngIf="item.pop > 0" class="pop-badge">
+                                <ion-icon name="umbrella"></ion-icon>
+                                <span>{{ item.pop * 100 | number:'1.0-0' }}%</span>
+                            </div>
+                        </ion-col>
+
+                        <!-- Temp -->
+                        <ion-col size="3" class="temp-col">
+                            <h2>{{ item.main.temp | number:'1.0-0' }}º</h2>
+                        </ion-col>
+
+                        <!-- Details -->
+                        <ion-col size="3" class="details-col">
+                            <div class="detail-item">
+                                <span class="label">💨</span>
+                                <span class="value">{{ item.wind.speed | number:'1.0-1' }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <ion-icon name="water" style="color: #4fc3f7;"></ion-icon>
+                                <span class="value">{{ item.main.humidity }}%</span>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+        </ng-container>
+
     </ion-list>
 </ion-content>
