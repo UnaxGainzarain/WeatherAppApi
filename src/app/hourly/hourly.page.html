@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-title>Por Horas: {{ currentCity }}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="background-weather">
+    <ion-list lines="none" class="glass-list">
+        <ion-item *ngFor="let item of hourlyList" class="glass-item">
+            <ion-label>
+                <h2>{{ item.dt_txt | date:'HH:mm' }}</h2>
+                <p>{{ item.dt_txt | date:'EEE, MMM d' }}</p>
+            </ion-label>
+
+            <div class="weather-info" slot="end">
+                <ion-icon [name]="getWeatherIcon(item.weather[0].icon)"
+                    style="font-size: 1.5rem; margin-right: 10px;"></ion-icon>
+                <div class="temp">
+                    <h2>{{ item.main.temp | number:'1.0-0' }}º</h2>
+                    <p class="feels-like">ST {{ item.main.feels_like | number:'1.0-0' }}º</p>
+                </div>
+            </div>
+        </ion-item>
+    </ion-list>
+</ion-content>

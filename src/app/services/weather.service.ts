@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +11,14 @@ export class WeatherService {
     apiKey = '49dea430a7c6d626a972baec4e125a69';
     baseUrl = 'https://api.openweathermap.org/data/2.5/';
 
+    private currentCitySubject = new BehaviorSubject<string>('Madrid');
+    currentCity$ = this.currentCitySubject.asObservable();
+
     constructor(private http: HttpClient) { }
+
+    updateCity(city: string) {
+        this.currentCitySubject.next(city);
+    }
 
     // Método para buscar por ciudad (Requisito del enunciado)
     getWeatherByCity(city: string): Observable<any> {

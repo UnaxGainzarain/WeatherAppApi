@@ -1,0 +1,11 @@
+.glass-tab-bar {
+    --background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    --color-selected: #fff;
+    --color: rgba(255, 255, 255, 0.6);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}

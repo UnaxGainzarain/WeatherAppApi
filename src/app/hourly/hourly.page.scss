@@ -1,0 +1,50 @@
+.background-weather {
+    --background: linear-gradient(180deg, #2b5876 0%, #4e4376 100%);
+}
+
+.glass-list {
+    background: transparent;
+    padding: 10px;
+}
+
+.glass-item {
+    --background: rgba(255, 255, 255, 0.1);
+    --color: white;
+    margin-bottom: 10px;
+    border-radius: 15px;
+    --border-radius: 15px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    ion-label {
+        h2 {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        p {
+            color: rgba(255, 255, 255, 0.7);
+        }
+    }
+}
+
+.weather-info {
+    display: flex;
+    align-items: center;
+
+    .temp {
+        text-align: right;
+
+        h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        .feels-like {
+            margin: 0;
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+    }
+}

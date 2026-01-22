@@ -2,16 +2,27 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
-    path: 'home',
-    loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
-  },
-  {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
+    loadComponent: () => import('./tabs/tabs.page').then((m) => m.TabsPage),
+    children: [
+      {
+        path: 'hourly',
+        loadComponent: () => import('./hourly/hourly.page').then((m) => m.HourlyPage),
+      },
+      {
+        path: 'daily',
+        loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+      },
+      {
+        path: '',
+        redirectTo: '/tabs/daily', // Default to daily view
+        pathMatch: 'full',
+      },
+    ],
   },
   {
-    path: 'search',
-    loadComponent: () => import('./search/search.page').then( m => m.SearchPage)
+    path: 'tabs',
+    redirectTo: '',
+    pathMatch: 'full'
   },
 ];

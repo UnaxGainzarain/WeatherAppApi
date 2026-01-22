@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { WeatherCardComponent } from '../components/weather-card/weather-card.component';
@@ -14,7 +14,7 @@ import { locate, sunny, partlySunny, cloudy, rainy, thunderstorm, snow, cloudyNi
   styleUrls: ['home.page.scss'],
   imports: [CommonModule, IonHeader, IonToolbar, IonTitle, IonContent, WeatherCardComponent, ForecastListComponent, FormsModule, IonSearchbar, IonButtons, IonButton, IonIcon],
 })
-export class HomePage {
+export class HomePage implements OnInit {
   searchTerm: string = '';
   weatherData: any;
   forecastList: any[] = [];
@@ -25,10 +25,22 @@ export class HomePage {
     addIcons({ locate, sunny, 'partly-sunny': partlySunny, cloudy, rainy, thunderstorm, snow, 'cloudy-night': cloudyNight, moon });
   }
 
+  ngOnInit() {
+    this.weatherService.currentCity$.subscribe(city => {
+      if (city) {
+        this.searchTerm = city; // Update search bar text
+        this.fetchWeatherData(city);
+      }
+    });
+  }
+
   searchCity() {
     if (this.searchTerm.trim() === '') return;
+    this.weatherService.updateCity(this.searchTerm);
+  }
 
-    this.weatherService.getWeatherByCity(this.searchTerm).subscribe({
+  fetchWeatherData(city: string) {
+    this.weatherService.getWeatherByCity(city).subscribe({
       next: (data) => {
         this.weatherData = data;
         this.currentIcon = this.getWeatherIcon(data.weather[0].icon);
@@ -51,7 +63,7 @@ export class HomePage {
       }
     });
 
-    this.weatherService.getForecastByCity(this.searchTerm).subscribe({
+    this.weatherService.getForecastByCity(city).subscribe({
       next: (data) => {
         this.processForecast(data.list); // Process data to get daily summaries
         console.log('Forecast data:', data);
