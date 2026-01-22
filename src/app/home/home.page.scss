@@ -1,6 +1,5 @@
 .background-weather {
   --background: linear-gradient(180deg, #2b5876 0%, #4e4376 100%);
-  /* Fallback or nice dark gradient to make glassmorphism pop */
 }
 
 .container {
@@ -9,12 +8,42 @@
   flex-direction: column;
   gap: 20px;
   height: 100%;
+  margin-top: 60px;
+  /* Space for toolbar */
 }
 
+/* Glassmorphism Title/Toolbar */
 ion-toolbar {
   --background: transparent;
   --color: white;
   position: absolute;
   top: 0;
   width: 100%;
+}
+
+/* Search Section */
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.custom-searchbar {
+  --background: rgba(255, 255, 255, 0.2);
+  --color: white;
+  --placeholder-color: rgba(255, 255, 255, 0.6);
+  --icon-color: rgba(255, 255, 255, 0.8);
+  --border-radius: 15px;
+  --box-shadow: none;
+  padding: 0;
+}
+
+.location-btn {
+  --background: rgba(255, 255, 255, 0.2);
+  --border-radius: 12px;
+  width: 48px;
+  height: 48px;
+  --padding-start: 0;
+  --padding-end: 0;
+  backdrop-filter: blur(10px);
 }

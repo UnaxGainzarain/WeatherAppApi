@@ -8,6 +8,18 @@
 
 <ion-content [fullscreen]="true" class="background-weather">
   <div class="container">
+
+    <!-- Search Section -->
+    <div class="search-container">
+      <ion-searchbar animated="true" placeholder="Buscar ciudad..." [(ngModel)]="searchTerm" (ionInput)="searchCity()"
+        class="custom-searchbar">
+      </ion-searchbar>
+
+      <ion-button fill="clear" class="location-btn" (click)="getCurrentLocation()">
+        <ion-icon slot="icon-only" name="locate" color="light"></ion-icon>
+      </ion-button>
+    </div>
+
     <app-weather-card></app-weather-card>
   </div>
 </ion-content>
