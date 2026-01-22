@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular'; // Fallback / mixed usage
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonText, IonThumbnail, IonIcon } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonText, IonThumbnail, IonIcon, IonListHeader, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
 import { WeatherService } from '../services/weather.service';
 import { addIcons } from 'ionicons';
 import { sunny, partlySunny, cloudy, rainy, thunderstorm, snow, cloudyNight, moon, water, umbrella } from 'ionicons/icons';
@@ -17,7 +17,7 @@ export interface ForecastGroup {
     templateUrl: './hourly.page.html',
     styleUrls: ['./hourly.page.scss'],
     standalone: true,
-    imports: [CommonModule, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonText, IonThumbnail, IonIcon]
+    imports: [CommonModule, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonText, IonThumbnail, IonIcon, IonListHeader, IonGrid, IonRow, IonCol]
 })
 export class HourlyPage implements OnInit {
     forecastGroups: ForecastGroup[] = [];
@@ -29,21 +29,27 @@ export class HourlyPage implements OnInit {
 
     ngOnInit() {
         this.weatherService.currentCity$.subscribe(city => {
+            console.log('HourlyPage: Current city updated:', city);
             this.currentCity = city;
-            this.getHourlyForecast(city);
+            if (city) {
+                this.getHourlyForecast(city);
+            }
         });
     }
 
     getHourlyForecast(city: string) {
+        console.log('HourlyPage: Fetching forecast for', city);
         this.weatherService.getForecastByCity(city).subscribe({
             next: (data) => {
+                console.log('HourlyPage: API Response:', data);
                 this.processForecastGroups(data.list);
             },
-            error: (err) => console.error(err)
+            error: (err) => console.error('HourlyPage Error:', err)
         });
     }
 
     processForecastGroups(list: any[]) {
+        console.log('HourlyPage: Processing list of size', list.length);
         const groups = new Map<string, ForecastGroup>();
 
         for (const item of list) {
@@ -61,6 +67,63 @@ export class HourlyPage implements OnInit {
 
         // Convert map to array and take top 5 entries (Today + 4 days)
         this.forecastGroups = Array.from(groups.values()).slice(0, 5);
+        console.log('HourlyPage: Groups created:', this.forecastGroups);
+
+        // Interpolate the first group (Today) to get hourly data
+        if (this.forecastGroups.length > 0) {
+            this.forecastGroups[0].items = this.interpolateHourlyData(this.forecastGroups[0].items);
+            console.log('HourlyPage: Interpolated first group:', this.forecastGroups[0].items);
+        }
+    }
+
+    interpolateHourlyData(items: any[]): any[] {
+        const hourlyItems: any[] = [];
+
+        for (let i = 0; i < items.length - 1; i++) {
+            const current = items[i];
+            const next = items[i + 1];
+
+            const currentDate = new Date(current.dt_txt);
+            const nextDate = new Date(next.dt_txt);
+
+            // Add current item
+            hourlyItems.push(current);
+
+            // Calculate hours difference (should be 3 usually)
+            const diffHours = (nextDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60);
+
+            if (diffHours > 1) {
+                // Interpolate
+                for (let h = 1; h < diffHours; h++) {
+                    const interpolatedTime = new Date(currentDate.getTime() + h * 60 * 60 * 1000);
+                    const factor = h / diffHours;
+
+                    const newItem = JSON.parse(JSON.stringify(current)); // Deep copy
+
+                    // Update Time
+                    newItem.dt_txt = interpolatedTime.toISOString().replace('T', ' ').substring(0, 19);
+
+                    // Linear Interpolation
+                    newItem.main.temp = current.main.temp + (next.main.temp - current.main.temp) * factor;
+                    newItem.main.feels_like = current.main.feels_like + (next.main.feels_like - current.main.feels_like) * factor;
+                    newItem.main.humidity = Math.round(current.main.humidity + (next.main.humidity - current.main.humidity) * factor);
+                    newItem.wind.speed = current.wind.speed + (next.wind.speed - current.wind.speed) * factor;
+                    if (current.pop !== undefined && next.pop !== undefined) {
+                        newItem.pop = current.pop + (next.pop - current.pop) * factor;
+                    }
+
+
+                    hourlyItems.push(newItem);
+                }
+            }
+        }
+
+        // Add last item
+        if (items.length > 0) {
+            hourlyItems.push(items[items.length - 1]);
+        }
+
+        return hourlyItems;
     }
 
     getWeatherIcon(code: string): string {
