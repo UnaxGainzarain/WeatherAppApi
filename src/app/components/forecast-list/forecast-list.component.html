@@ -2,7 +2,8 @@
   <div class="glass-item" *ngFor="let item of items">
     <div class="time">
       <ion-text color="light">
-        <p>{{ item.dt_txt | date:'EEE, HH:mm' }}</p>
+        <!-- Display Day Name (e.g., "Monday") -->
+        <p>{{ item.dt_txt | date:'EEEE' }}</p>
       </ion-text>
     </div>
     <div class="condition">
@@ -12,7 +13,8 @@
     </div>
     <div class="temp">
       <ion-text color="light">
-        <h2>{{ item.main.temp | number:'1.0-0' }}º</h2>
+        <!-- Display Max / Min -->
+        <h2>{{ item.max | number:'1.0-0' }}º / {{ item.min | number:'1.0-0' }}º</h2>
       </ion-text>
     </div>
   </div>

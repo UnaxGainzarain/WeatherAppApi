@@ -11,6 +11,8 @@ import { IonCard, IonCardContent, IonText, IonIcon, IonGrid, IonRow, IonCol } fr
 })
 export class WeatherCardComponent implements OnInit {
   @Input() weather: any;
+  @Input() uvIndex: number = 0;
+  @Input() icon: string = 'sunny';
   ngOnInit() { }
 
 }

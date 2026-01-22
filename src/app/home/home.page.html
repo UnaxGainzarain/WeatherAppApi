@@ -21,7 +21,8 @@
     </div>
 
     <!-- Weather Card (Only shown if data exists) -->
-    <app-weather-card *ngIf="weatherData" [weather]="weatherData"></app-weather-card>
+    <app-weather-card *ngIf="weatherData" [weather]="weatherData" [uvIndex]="uvIndex"
+      [icon]="currentIcon"></app-weather-card>
 
     <!-- Forecast List (Only shown if data exists) -->
     <app-forecast-list *ngIf="forecastList.length > 0" [items]="forecastList"></app-forecast-list>
