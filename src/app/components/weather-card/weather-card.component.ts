@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonCard, IonCardContent, IonText, IonIcon, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
 
@@ -10,15 +10,7 @@ import { IonCard, IonCardContent, IonText, IonIcon, IonGrid, IonRow, IonCol } fr
   imports: [CommonModule, IonCard, IonCardContent, IonText, IonIcon, IonGrid, IonRow, IonCol]
 })
 export class WeatherCardComponent implements OnInit {
-  // Mock data for design
-  city: string = 'Arbizu';
-  temperature: number = 8;
-  description: string = 'Lluvia';
-  minMax: string = '10°/4°';
-
-
-  constructor() { }
-
+  @Input() weather: any;
   ngOnInit() { }
 
 }

@@ -1,20 +1,23 @@
-<ion-card class="glass-card">
+<ion-card class="glass-card" *ngIf="weather">
   <ion-card-content>
     <ion-grid>
       <ion-row class="ion-justify-content-center ion-text-center">
         <ion-col size="12">
           <ion-text color="light">
-            <h2 class="city-name">{{ city }}</h2>
+            <h2 class="city-name">{{ weather.name }}</h2>
           </ion-text>
         </ion-col>
         <ion-col size="12">
           <ion-text color="light">
-            <h1 class="temperature">{{ temperature }}º</h1>
+            <h1 class="temperature">{{ weather.main.temp | number:'1.0-0' }}º</h1>
           </ion-text>
         </ion-col>
         <ion-col size="12">
           <ion-text color="light">
-            <p class="description">{{ description }} {{ minMax }}</p>
+            <p class="description">
+              {{ weather.weather[0].description }}
+              {{ weather.main.temp_max | number:'1.0-0' }}º/{{ weather.main.temp_min | number:'1.0-0' }}º
+            </p>
           </ion-text>
         </ion-col>
       </ion-row>

@@ -20,6 +20,7 @@
       </ion-button>
     </div>
 
-    <app-weather-card></app-weather-card>
+    <!-- Weather Card (Only shown if data exists) -->
+    <app-weather-card *ngIf="weatherData" [weather]="weatherData"></app-weather-card>
   </div>
 </ion-content>
