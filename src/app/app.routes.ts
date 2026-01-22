@@ -15,14 +15,9 @@ export const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/daily', // Default to daily view
+        redirectTo: 'daily',
         pathMatch: 'full',
       },
     ],
-  },
-  {
-    path: 'tabs',
-    redirectTo: '',
-    pathMatch: 'full'
   },
 ];
