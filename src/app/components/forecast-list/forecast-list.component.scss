@@ -21,8 +21,15 @@
 
     .time,
     .condition,
+    .icon-col,
     .temp {
         flex: 1;
+    }
+
+    .icon-col {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .time p {

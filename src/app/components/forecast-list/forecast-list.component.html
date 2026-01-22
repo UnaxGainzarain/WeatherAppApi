@@ -11,6 +11,9 @@
         <p>{{ item.weather[0].description }}</p>
       </ion-text>
     </div>
+    <div class="icon-col">
+      <ion-icon [name]="getWeatherIcon(item.weather[0].icon)" style="font-size: 1.8rem; color: #fff;"></ion-icon>
+    </div>
     <div class="temp">
       <ion-text color="light">
         <!-- Display Max / Min -->
