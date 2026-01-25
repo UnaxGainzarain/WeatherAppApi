@@ -10,5 +10,9 @@
     "DETAILS": {
         "HUMIDITY": "Humidity",
         "WIND": "Wind"
+    },
+    "TABS": {
+        "HOURLY": "Hourly",
+        "DAILY": "Daily"
     }
 }

@@ -10,5 +10,9 @@
     "DETAILS": {
         "HUMIDITY": "Humedad",
         "WIND": "Viento"
+    },
+    "TABS": {
+        "HOURLY": "Por Horas",
+        "DAILY": "Diario"
     }
 }
