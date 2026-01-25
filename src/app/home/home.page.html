@@ -1,8 +1,19 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Weather App
+      {{ 'WEATHER_APP' | translate }}
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-segment [value]="currentLang" (ionChange)="changeLanguage($event)"
+        style="width: 120px; --background: rgba(255,255,255,0.2);">
+        <ion-segment-button value="es">
+          <ion-label>ES</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="en">
+          <ion-label>EN</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -11,8 +22,8 @@
 
     <!-- Search Section -->
     <div class="search-container">
-      <ion-searchbar animated="true" placeholder="Buscar ciudad..." [(ngModel)]="searchTerm" (ionInput)="searchCity()"
-        class="custom-searchbar">
+      <ion-searchbar animated="true" [placeholder]="'SEARCH_PLACEHOLDER' | translate" [(ngModel)]="searchTerm"
+        (ionInput)="searchCity()" class="custom-searchbar">
       </ion-searchbar>
 
       <ion-button fill="clear" class="location-btn" (click)="getCurrentLocation()">

@@ -4,15 +4,17 @@ import { CommonModule } from '@angular/common';
 import { WeatherCardComponent } from '../components/weather-card/weather-card.component';
 import { ForecastListComponent } from '../components/forecast-list/forecast-list.component';
 import { WeatherService } from '../services/weather.service';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonSearchbar, IonButtons, IonButton, IonIcon } from '@ionic/angular/standalone';
+import { LanguageService } from '../services/language.service';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonSearchbar, IonButtons, IonButton, IonIcon, IonSegment, IonSegmentButton, IonLabel } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { locate, sunny, partlySunny, cloudy, rainy, thunderstorm, snow, cloudyNight, moon } from 'ionicons/icons';
+import { locate, sunny, partlySunny, cloudy, rainy, thunderstorm, snow, cloudyNight, moon, globe } from 'ionicons/icons';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [CommonModule, IonHeader, IonToolbar, IonTitle, IonContent, WeatherCardComponent, ForecastListComponent, FormsModule, IonSearchbar, IonButtons, IonButton, IonIcon],
+  imports: [CommonModule, IonHeader, IonToolbar, IonTitle, IonContent, WeatherCardComponent, ForecastListComponent, FormsModule, IonSearchbar, IonButtons, IonButton, IonIcon, TranslateModule, IonSegment, IonSegmentButton, IonLabel],
 })
 export class HomePage implements OnInit {
   searchTerm: string = '';
@@ -20,9 +22,14 @@ export class HomePage implements OnInit {
   forecastList: any[] = [];
   uvIndex: number = 0;
   currentIcon: string = 'sunny';
+  currentLang: string = 'es';
 
-  constructor(private weatherService: WeatherService) {
-    addIcons({ locate, sunny, 'partly-sunny': partlySunny, cloudy, rainy, thunderstorm, snow, 'cloudy-night': cloudyNight, moon });
+  constructor(
+    private weatherService: WeatherService,
+    private languageService: LanguageService
+  ) {
+    addIcons({ locate, sunny, 'partly-sunny': partlySunny, cloudy, rainy, thunderstorm, snow, 'cloudy-night': cloudyNight, moon, globe });
+    this.currentLang = this.languageService.getCurrentLanguage();
   }
 
   ngOnInit() {
@@ -145,6 +152,17 @@ export class HomePage implements OnInit {
       );
     } else {
       alert('Geolocation is not supported by this browser.');
+    }
+  }
+
+  changeLanguage(event: any) {
+    const lang = event.detail.value;
+    this.currentLang = lang;
+    this.languageService.setLanguage(lang);
+
+    // Refresh data if a city is selected
+    if (this.weatherData && this.weatherData.name) {
+      this.fetchWeatherData(this.weatherData.name);
     }
   }
 

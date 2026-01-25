@@ -1,0 +1,14 @@
+{
+    "WEATHER_APP": "El Tiempo",
+    "SEARCH_PLACEHOLDER": "Buscar ciudad...",
+    "FORECAST_TITLE": "Pronóstico 5 Días",
+    "HOURLY_TITLE": "Por Horas",
+    "TODAY": "Hoy",
+    "LANGUAGE": "Idioma",
+    "ERROR_LOCATION": "No se pudo obtener tu ubicación",
+    "ERROR_GEOLOCATION_SUPPORT": "Geolocalización no soportada",
+    "DETAILS": {
+        "HUMIDITY": "Humedad",
+        "WIND": "Viento"
+    }
+}

@@ -5,6 +5,7 @@ import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel
 import { WeatherService } from '../services/weather.service';
 import { addIcons } from 'ionicons';
 import { sunny, partlySunny, cloudy, rainy, thunderstorm, snow, cloudyNight, moon, water, umbrella } from 'ionicons/icons';
+import { TranslateModule } from '@ngx-translate/core';
 
 export interface ForecastGroup {
     date: string; // YYYY-MM-DD
@@ -17,7 +18,7 @@ export interface ForecastGroup {
     templateUrl: './hourly.page.html',
     styleUrls: ['./hourly.page.scss'],
     standalone: true,
-    imports: [CommonModule, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonText, IonThumbnail, IonIcon, IonListHeader, IonGrid, IonRow, IonCol]
+    imports: [CommonModule, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonText, IonThumbnail, IonIcon, IonListHeader, IonGrid, IonRow, IonCol, TranslateModule]
 })
 export class HourlyPage implements OnInit {
     forecastGroups: ForecastGroup[] = [];

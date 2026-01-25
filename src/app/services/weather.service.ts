@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, switchMap } from 'rxjs'; // switchMap added
+import { LanguageService } from './language.service'; // Added import
 
 @Injectable({
     providedIn: 'root'
@@ -14,28 +15,39 @@ export class WeatherService {
     private currentCitySubject = new BehaviorSubject<string>('Madrid');
     currentCity$ = this.currentCitySubject.asObservable();
 
-    constructor(private http: HttpClient) { }
+    constructor(
+        private http: HttpClient,
+        private languageService: LanguageService // Injected service
+    ) { }
 
     updateCity(city: string) {
         this.currentCitySubject.next(city);
     }
 
+    private getLang(): string {
+        return this.languageService.getCurrentLanguage();
+    }
+
     // Método para buscar por ciudad (Requisito del enunciado)
     getWeatherByCity(city: string): Observable<any> {
-        return this.http.get(`${this.baseUrl}weather?q=${city}&appid=${this.apiKey}&units=metric&lang=es`);
+        const lang = this.getLang();
+        return this.http.get(`${this.baseUrl}weather?q=${city}&appid=${this.apiKey}&units=metric&lang=${lang}`);
     }
 
     // Método para la predicción de 5 días (Requisito del enunciado)
     getForecastByCity(city: string): Observable<any> {
-        return this.http.get(`${this.baseUrl}forecast?q=${city}&appid=${this.apiKey}&units=metric&lang=es`);
+        const lang = this.getLang();
+        return this.http.get(`${this.baseUrl}forecast?q=${city}&appid=${this.apiKey}&units=metric&lang=${lang}`);
     }
 
     getWeatherByCoords(lat: number, lon: number): Observable<any> {
-        return this.http.get(`${this.baseUrl}weather?lat=${lat}&lon=${lon}&appid=${this.apiKey}&units=metric&lang=es`);
+        const lang = this.getLang();
+        return this.http.get(`${this.baseUrl}weather?lat=${lat}&lon=${lon}&appid=${this.apiKey}&units=metric&lang=${lang}`);
     }
 
     getForecastByCoords(lat: number, lon: number): Observable<any> {
-        return this.http.get(`${this.baseUrl}forecast?lat=${lat}&lon=${lon}&appid=${this.apiKey}&units=metric&lang=es`);
+        const lang = this.getLang();
+        return this.http.get(`${this.baseUrl}forecast?lat=${lat}&lon=${lon}&appid=${this.apiKey}&units=metric&lang=${lang}`);
     }
 
     getUV(lat: number, lon: number): Observable<any> {

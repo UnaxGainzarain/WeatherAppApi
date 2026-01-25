@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { IonList, IonItem, IonLabel, IonNote, IonIcon, IonText } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { sunny, partlySunny, cloudy, rainy, thunderstorm, snow, cloudyNight, moon } from 'ionicons/icons';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-forecast-list',
   templateUrl: './forecast-list.component.html',
   styleUrls: ['./forecast-list.component.scss'],
   standalone: true,
-  imports: [CommonModule, IonList, IonItem, IonLabel, IonNote, IonIcon, IonText]
+  imports: [CommonModule, IonList, IonItem, IonLabel, IonNote, IonIcon, IonText, TranslateModule]
 })
 export class ForecastListComponent implements OnInit {
   @Input() items: any[] = [];

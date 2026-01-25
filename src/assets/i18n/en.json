@@ -1,0 +1,14 @@
+{
+    "WEATHER_APP": "Weather App",
+    "SEARCH_PLACEHOLDER": "Search city...",
+    "FORECAST_TITLE": "5-Day Forecast",
+    "HOURLY_TITLE": "Hourly",
+    "TODAY": "Today",
+    "LANGUAGE": "Language",
+    "ERROR_LOCATION": "Could not get your location",
+    "ERROR_GEOLOCATION_SUPPORT": "Geolocation not supported",
+    "DETAILS": {
+        "HUMIDITY": "Humidity",
+        "WIND": "Wind"
+    }
+}
