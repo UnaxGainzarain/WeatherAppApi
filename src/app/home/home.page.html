@@ -4,8 +4,7 @@
       {{ 'WEATHER_APP' | translate }}
     </ion-title>
     <ion-buttons slot="end">
-      <ion-segment [value]="currentLang" (ionChange)="changeLanguage($event)"
-        style="width: 120px; --background: rgba(255,255,255,0.2);">
+      <ion-segment [value]="currentLang" (ionChange)="changeLanguage($event)" class="lang-segment">
         <ion-segment-button value="es">
           <ion-label>ES</ion-label>
         </ion-segment-button>

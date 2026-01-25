@@ -49,3 +49,29 @@ ion-toolbar {
   --padding-end: 0;
   backdrop-filter: blur(10px);
 }
+
+/* Language Switcher */
+.lang-segment {
+  width: 120px;
+  --background: rgba(255, 255, 255, 0.15);
+  /* Slightly transparent background */
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 4px;
+  margin-right: 15px;
+  /* Prevent cut-off on right edge */
+
+  ion-segment-button {
+    --color: rgba(255, 255, 255, 0.7);
+    --color-checked: #fff;
+    --indicator-color: rgba(255, 255, 255, 0.3);
+    /* Glassy active state */
+    --border-radius: 16px;
+    min-height: 32px;
+
+    ion-label {
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+  }
+}
