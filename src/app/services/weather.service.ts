@@ -30,6 +30,14 @@ export class WeatherService {
         return this.http.get(`${this.baseUrl}forecast?q=${city}&appid=${this.apiKey}&units=metric&lang=es`);
     }
 
+    getWeatherByCoords(lat: number, lon: number): Observable<any> {
+        return this.http.get(`${this.baseUrl}weather?lat=${lat}&lon=${lon}&appid=${this.apiKey}&units=metric&lang=es`);
+    }
+
+    getForecastByCoords(lat: number, lon: number): Observable<any> {
+        return this.http.get(`${this.baseUrl}forecast?lat=${lat}&lon=${lon}&appid=${this.apiKey}&units=metric&lang=es`);
+    }
+
     getUV(lat: number, lon: number): Observable<any> {
         // Try to use One Call API 2.5 if available, or fall back to UV endpoint if needed.
         // For simplicity in this project context, we'll try the One Call 2.5 which is common for legacy/student keys

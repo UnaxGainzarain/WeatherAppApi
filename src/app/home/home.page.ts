@@ -106,7 +106,46 @@ export class HomePage implements OnInit {
 
   getCurrentLocation() {
     console.log('Getting current location...');
-    // TODO: Implement Gelocation logic
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          console.log(`Location found: ${lat}, ${lon}`);
+
+          // 1. Fetch Current Weather
+          this.weatherService.getWeatherByCoords(lat, lon).subscribe({
+            next: (data) => {
+              this.weatherData = data;
+              this.currentIcon = this.getWeatherIcon(data.weather[0].icon);
+              this.searchTerm = data.name; // Update search term with found city name
+              this.weatherService.updateCity(data.name); // Sync with other tabs
+
+              // 2. Fetch UV
+              this.weatherService.getUV(lat, lon).subscribe({
+                next: (uvData) => this.uvIndex = uvData.value || uvData.current?.uvi || 0,
+                error: (err) => console.error('Error fetching UV:', err)
+              });
+            },
+            error: (err) => console.error('Error getting weather by coords:', err)
+          });
+
+          // 3. Fetch Forecast
+          this.weatherService.getForecastByCoords(lat, lon).subscribe({
+            next: (data) => {
+              this.processForecast(data.list);
+            },
+            error: (err) => console.error('Error getting forecast by coords:', err)
+          });
+        },
+        (error) => {
+          console.error('Error getting location:', error);
+          alert('Could not get your location. Please check permissions.');
+        }
+      );
+    } else {
+      alert('Geolocation is not supported by this browser.');
+    }
   }
 
   getWeatherIcon(code: string): string {
