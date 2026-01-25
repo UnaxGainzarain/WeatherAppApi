@@ -20,6 +20,6 @@ export class LanguageService {
     }
 
     getCurrentLanguage(): string {
-        return this.translate.currentLang || 'es';
+        return this.currentLangSubject.getValue();
     }
 }
