@@ -11,7 +11,7 @@
             <!-- Date Header -->
             <ion-list-header class="glass-header">
                 <ion-label>
-                    {{ i === 0 ? ('TODAY' | translate) : (group.date | date:'EEEE, d MMMM') }}
+                    {{ i === 0 ? ('TODAY' | translate) : (group.date | date:'EEEE, d MMMM':'':currentLang) }}
                 </ion-label>
             </ion-list-header>
 

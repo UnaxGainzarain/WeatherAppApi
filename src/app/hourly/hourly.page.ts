@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular'; // Fallback / mixed usage
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonText, IonThumbnail, IonIcon, IonListHeader, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
 import { WeatherService } from '../services/weather.service';
+import { LanguageService } from '../services/language.service';
 import { addIcons } from 'ionicons';
 import { sunny, partlySunny, cloudy, rainy, thunderstorm, snow, cloudyNight, moon, water, umbrella } from 'ionicons/icons';
 import { TranslateModule } from '@ngx-translate/core';
@@ -23,9 +24,14 @@ export interface ForecastGroup {
 export class HourlyPage implements OnInit {
     forecastGroups: ForecastGroup[] = [];
     currentCity: string = '';
+    currentLang: string = 'es';
 
-    constructor(private weatherService: WeatherService) {
+    constructor(
+        private weatherService: WeatherService,
+        private languageService: LanguageService
+    ) {
         addIcons({ sunny, 'partly-sunny': partlySunny, cloudy, rainy, thunderstorm, snow, 'cloudy-night': cloudyNight, moon, water, umbrella });
+        this.currentLang = this.languageService.getCurrentLanguage();
     }
 
     ngOnInit() {
@@ -34,6 +40,13 @@ export class HourlyPage implements OnInit {
             this.currentCity = city;
             if (city) {
                 this.getHourlyForecast(city);
+            }
+        });
+
+        this.languageService.currentLang$.subscribe((lang) => {
+            this.currentLang = lang;
+            if (this.currentCity) {
+                this.getHourlyForecast(this.currentCity);
             }
         });
     }

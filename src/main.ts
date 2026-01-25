@@ -5,6 +5,10 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { importProvidersFrom } from '@angular/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+
+registerLocaleData(localeEs);
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';

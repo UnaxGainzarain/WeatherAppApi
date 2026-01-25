@@ -36,6 +36,7 @@
       [icon]="currentIcon"></app-weather-card>
 
     <!-- Forecast List (Only shown if data exists) -->
-    <app-forecast-list *ngIf="forecastList.length > 0" [items]="forecastList"></app-forecast-list>
+    <app-forecast-list *ngIf="forecastList.length > 0" [items]="forecastList"
+      [currentLang]="currentLang"></app-forecast-list>
   </div>
 </ion-content>

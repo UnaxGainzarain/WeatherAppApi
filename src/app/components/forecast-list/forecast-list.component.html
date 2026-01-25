@@ -3,7 +3,7 @@
     <div class="time">
       <ion-text color="light">
         <!-- Display Day Name (e.g., "Monday") -->
-        <p>{{ item.dt_txt | date:'EEEE' }}</p>
+        <p>{{ item.dt_txt | date:'EEEE':'':currentLang }}</p>
       </ion-text>
     </div>
     <div class="condition">

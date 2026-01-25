@@ -14,6 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class ForecastListComponent implements OnInit {
   @Input() items: any[] = [];
+  @Input() currentLang: string = 'es';
 
   constructor() {
     addIcons({ sunny, 'partly-sunny': partlySunny, cloudy, rainy, thunderstorm, snow, 'cloudy-night': cloudyNight, moon });
